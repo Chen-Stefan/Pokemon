@@ -1,6 +1,7 @@
 let currentType = null;
 let currentRegion = null;
 let pokemonName = null;
+let nameInput = null;
 
 function createSingleTypePokemon(data_t) {
     let pokemonID = data_t.id;
@@ -73,6 +74,29 @@ function displaySpecificRegion(pokemonRegion) {
    
 }
 
+function createSpecificPokemon(data_n) {
+    let pokemonID = data_n.id;
+    let singlePokemonCard = 
+    ` ${nameInput}<div class="picture"> 
+<a href="http://localhost:5000/profile/${pokemonID}">
+<img src="${data_n.sprites.other["official-artwork"].front_default}">
+</a> </div>`; 
+    $("main").append(singlePokemonCard);
+}
+
+function searchPokemonByName() {
+    $("main").empty();
+    nameInput = $("#name-input").val();
+    if (!/^[a-zA-Z]+$/.test(nameInput)) {
+        alert("Wrong type! Please enter only string to search by name");
+    }
+    $.ajax({
+        type: "GET",
+        url: `https://pokeapi.co/api/v2/pokemon/${nameInput}`,
+        success: createSpecificPokemon
+    });
+}
+
 function setup() {
     // display the default pokemon type - normal
     displaySpecificType($("#pokemon-type option:selected").val());
@@ -85,6 +109,7 @@ function setup() {
         pokemonRegion = $("#pokemon-region option:selected").val();
         displaySpecificRegion(pokemonRegion);
     })
+    $("#search-btn").click(searchPokemonByName);
 }
 
 
