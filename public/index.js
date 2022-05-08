@@ -6,6 +6,7 @@ function grabPokemonImage(data) {
   <a href="/profile/${data.id}">
   <img src="${data.sprites.other["official-artwork"].front_default}">
   </a> </div>`;
+  
 }
 
 async function loadRandomPokemons() {

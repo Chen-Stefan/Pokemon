@@ -109,3 +109,21 @@ ol, ul{
 	display: flex;
 	flex-basis: 30%;
 }
+
+.picture {                
+	display: flex;
+	flex-wrap: wrap;
+	flex-basis: 30%;
+}
+
+footer {
+
+    text-align: center;
+    padding: 20px;
+    clear: both;
+}
+
+#logo_container {
+    overflow: hidden;
+
+}
