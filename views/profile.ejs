@@ -8,10 +8,17 @@
 </head>
 <!-- 这是一个dynamic html page -->
 <body>
-    <h1> I am doing very well
+    <h1> Pokemon lovers unite
         
     </h1>               
     <!-- 注意这个syntax <%=  %>  它类似于template literal ${} -->
     <h2>And the pokemon id is <%= id %></h2>
+
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/<%= id %>.png" alt="">
+    <br>
+    Name: <%= name %>
+    <br>
+    HP: <%= hp %>
+    
 </body>
 </html>

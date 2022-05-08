@@ -1,6 +1,7 @@
 const express = require("express");
 const res = require("express/lib/response");
-const app = express();             
+const app = express();      
+const https = require('https');       
 
 app.set('view engine', 'ejs');
 
@@ -17,16 +18,29 @@ app.listen(5000, function(err){      // anonymous function as the second paramet
 //     res.send(`Hi there, the pokemon has the id ${req.params.id}`) 
 // })
 
-app.get('/profile/:id', function (req, res){      
-    res.render("profile.ejs", {  
-        "id": req.params.id
-    });              // second parameter is a JSON object, 把这个值喂给EJS，然后再render整个EJS page
-    // 如果有这个的话，之前render的profile.ejs就没了，会被下面的json object取代掉
-    // res.json({                  
-    //     "nabil": "cute",
-    //     "chris": "dumb",
-    //     "hoda": "love"
-    // })
+app.get('/profile/:id', function (req, res) {   
+    const url = `https://pokeapi.co/api/v2/pokemon/${req.params.id}`;
+    let data = "";
+    https.get(url, function(https_res) {
+        https_res.on("data", function(chunk) {  
+            data += chunk;
+        })
+        https_res.on("end", function() {
+            data = JSON.parse(data);
+
+            let hpArray = data.stats.filter((obj) => {
+                return obj.stat.name == "hp"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
+            res.render("profile.ejs", {  
+                "id": req.params.id,
+                "name": data.name,
+                "hp": hpArray[0]          // 去看数据，怎么读出Hp
+            })
+        })
+    })              
 })
 
 // sendFile 和res.render一样也可以send整个page to client, 但是sendFile只能send一个static page
