@@ -1,7 +1,8 @@
-let image_grid = "";  // global variable
+let image_grid = ""; 
 
 function grabPokemonImage(data) {
-  image_grid += ` ${data.name}<div class="picture"> 
+  let pokemonName = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+  image_grid += ` ${pokemonName}<div class="picture"> 
   <a href="/profile/${data.id}">
   <img src="${data.sprites.other["official-artwork"].front_default}">
   </a> </div>`;
