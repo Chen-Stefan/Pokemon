@@ -7,7 +7,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.static('./public'));     
 
-app.listen(5000, function(err){      // anonymous function as the second parameter
+app.listen(process.env.PORT || 5000, function (err) {     // anonymous function as the second parameter
     if(err) console.log(err);
 })
 
