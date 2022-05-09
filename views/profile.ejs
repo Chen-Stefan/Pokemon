@@ -8,17 +8,28 @@
 </head>
 <!-- 这是一个dynamic html page -->
 <body>
-    <h1> Pokemon lovers unite
-        
-    </h1>               
     <!-- 注意这个syntax <%=  %>  它类似于template literal ${} -->
-    <h2>And the pokemon id is <%= id %></h2>
-
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/<%= id %>.png" alt="">
-    <br>
-    Name: <%= name %>
+    <h2><%= name %></h2>
+    <h2>ID: <%= id %></h2>
+    <d</div>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/<%= id %>.png" width="35%" alt="">
     <br>
     HP: <%= hp %>
-    <progress id="file" value = "<%= hp %>" max="255"> <%= hp %> </progress>
+    <progress id="file" value = "<%= hp %>" max="255"> <%= hp %> </progress> 
+    <br>
+    Attack: <%= attack %>
+    <progress id="file" value = "<%= attack %>" max="255"> <%= attack %> </progress>
+    <br>
+    Defense: <%= defense %>
+    <progress id="file" value = "<%= defense %>" max="255"> <%= defense %> </progress>
+    <br>
+    Special Attack: <%= spAttack %>
+    <progress id="file" value = "<%= spAttack %>" max="255"> <%= spAttack %> </progress>
+    <br>
+    Special Defense: <%= spDefense %>
+    <progress id="file" value = "<%= spDefense %>" max="255"> <%= spDefense %> </progress>
+    <br>
+    Speed: <%= speed %>
+    <progress id="file" value = "<%= speed %>" max="255"> <%= speed %> </progress>
 </body>
 </html>

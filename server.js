@@ -34,10 +34,45 @@ app.get('/profile/:id', function (req, res) {
                 return obj_.base_stat     // 这个返回的是一个array
             })
 
+            let attackArray = data.stats.filter((obj) => {
+                return obj.stat.name == "attack"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
+            let defenseArray = data.stats.filter((obj) => {
+                return obj.stat.name == "defense"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
+            let specialAttackArray = data.stats.filter((obj) => {
+                return obj.stat.name == "special-attack"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
+            let specialDefenseArray = data.stats.filter((obj) => {
+                return obj.stat.name == "special-defense"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
+            let speedArray = data.stats.filter((obj) => {
+                return obj.stat.name == "speed"
+            }).map((obj_) => {
+                return obj_.base_stat     // 这个返回的是一个array
+            })
+
             res.render("profile.ejs", {  
                 "id": req.params.id,
                 "name": data.name,
-                "hp": hpArray[0]          // 去看数据，怎么读出Hp
+                "hp": hpArray[0],
+                "attack": attackArray[0],        
+                "defense": defenseArray[0],        
+                "spAttack": specialAttackArray[0],        
+                "spDefense": specialDefenseArray[0],        
+                "speed": speedArray[0]       
             })
         })
     })              
