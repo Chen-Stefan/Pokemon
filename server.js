@@ -11,7 +11,7 @@ app.listen(process.env.PORT || 5000, function (err) {     // anonymous function 
     if(err) console.log(err);
 })
 
-// url里的内容属于request, req是一个很大的object，params是其中一个attribute
+// url里的内容属于request
 // res.send()一般用一次， res.write()会把string concatenate, 可以连用好多个
 
 // app.get('/profile/:id', function (req, res){      
