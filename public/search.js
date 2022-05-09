@@ -10,7 +10,7 @@ function createSingleTypePokemon(data_t) {
 <a href="http://localhost:5000/profile/${pokemonID}">
 <img src="${data_t.sprites.other["official-artwork"].front_default}">
 </a> </div>`; 
-    $("main").append(singlePokemonCard);
+    $("#left-col").append(singlePokemonCard);
 }
 
 
@@ -27,7 +27,7 @@ async function processPokemonByType(data) {
 }
 
 function displaySpecificType(pokemonType) {
-    $("main").empty();
+    $("#left-col").empty();
     let allTypes = ["normal", "fighting", "flying", "poison", "ground", "rock", "bug", "ghost", "steel", "fire", "water", "grass", "electric", "psychic",  "ice", "dragon", "dark", "fairy"];
     currentType = pokemonType;
     typeID = allTypes.indexOf(currentType) + 1
@@ -46,11 +46,11 @@ function createSingleRegionPokemon(data_r) {
 <a href="http://localhost:5000/profile/${pokemonID}">
 <img src="${data_r.sprites.other["official-artwork"].front_default}">
 </a> </div>`; 
-    $("main").append(singlePokemonCard);
+    $("#left-col").append(singlePokemonCard);
 }
 
 function displaySpecificRegion(pokemonRegion) {
-    $("main").empty();
+    $("#left-col").empty();
     let regionalID = {
         "kanto": [1, 151],
         "johto": [152, 251],
@@ -75,26 +75,50 @@ function displaySpecificRegion(pokemonRegion) {
 }
 
 function createSpecificPokemon(data_n) {
+    $("#left-col").empty();
     let pokemonID = data_n.id;
     let singlePokemonCard = 
     ` ${nameInput}<div class="picture"> 
 <a href="http://localhost:5000/profile/${pokemonID}">
 <img src="${data_n.sprites.other["official-artwork"].front_default}">
 </a> </div>`; 
-    $("main").append(singlePokemonCard);
+    $("#left-col").append(singlePokemonCard);
 }
 
-function searchPokemonByName() {
-    $("main").empty();
+function trackSearchedItem() {
+    searchedItem = $(this).text();
+    $.ajax({
+        type: "GET",
+        url: `https://pokeapi.co/api/v2/pokemon/${searchedItem}`,
+        success: createSpecificPokemon
+    });
+}
+ 
+async function searchPokemonByName() {
     nameInput = $("#name-input").val();
     if (!/^[a-zA-Z]+$/.test(nameInput)) {
         alert("Wrong type! Please enter only string to search by name");
     }
-    $.ajax({
+    await $.ajax({
         type: "GET",
         url: `https://pokeapi.co/api/v2/pokemon/${nameInput}`,
         success: createSpecificPokemon
     });
+    $("#search-items").append(
+        "<span class='search-item'>" +
+          `<a href= "#" onclick="trackSearchedItem()">${nameInput}</a>` +
+          '<input class="hide" type="button" value="Remove">' +
+          "</span>" +
+          "<br>"
+      );
+}
+
+function hide_() {
+    $(this).parent().remove();
+}
+
+function clearHistory() {
+    $("#search-items").empty();
 }
 
 function setup() {
@@ -110,6 +134,8 @@ function setup() {
         displaySpecificRegion(pokemonRegion);
     })
     $("#search-btn").click(searchPokemonByName);
+    $("body").on("click", ".hide", hide_);
+    $("body").on("click", "#clear-btn", clearHistory);
 }
 
 
