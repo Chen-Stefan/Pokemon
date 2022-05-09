@@ -74,26 +74,24 @@ function displaySpecificRegion(pokemonRegion) {
    
 }
 
-function createSpecificPokemon(data_n) {
+function displaySearchResultAndHistory(data_n) {
     $("#left-col").empty();
     let pokemonID = data_n.id;
     let singlePokemonCard = 
     ` ${nameInput}<div class="picture"> 
-<a href="http://localhost:5000/profile/${pokemonID}">
-<img src="${data_n.sprites.other["official-artwork"].front_default}">
-</a> </div>`; 
+    <a href="http://localhost:5000/profile/${pokemonID}">
+    <img src="${data_n.sprites.other["official-artwork"].front_default}">
+    </a> </div>`; 
     $("#left-col").append(singlePokemonCard);
+    $("#search-items").append(
+        "<span class='search-item'>" +
+          `<a href= "http://localhost:5000/profile/${pokemonID}">${nameInput}</a>` +
+          '<input class="hide" type="button" value="Remove">' +
+          "</span>" +
+          "<br>"
+      );
 }
 
-function trackSearchedItem() {
-    searchedItem = $(this).text();
-    $.ajax({
-        type: "GET",
-        url: `https://pokeapi.co/api/v2/pokemon/${searchedItem}`,
-        success: createSpecificPokemon
-    });
-}
- 
 async function searchPokemonByName() {
     nameInput = $("#name-input").val();
     if (!/^[a-zA-Z]+$/.test(nameInput)) {
@@ -102,15 +100,8 @@ async function searchPokemonByName() {
     await $.ajax({
         type: "GET",
         url: `https://pokeapi.co/api/v2/pokemon/${nameInput}`,
-        success: createSpecificPokemon
+        success: displaySearchResultAndHistory
     });
-    $("#search-items").append(
-        "<span class='search-item'>" +
-          `<a href= "#" onclick="trackSearchedItem()">${nameInput}</a>` +
-          '<input class="hide" type="button" value="Remove">' +
-          "</span>" +
-          "<br>"
-      );
 }
 
 function hide_() {
@@ -122,7 +113,6 @@ function clearHistory() {
 }
 
 function setup() {
-    // display the default pokemon type - normal
     displaySpecificType($("#pokemon-type option:selected").val());
     $("#pokemon-type").change(() => {
         pokemonType = $("#pokemon-type option:selected").val();
